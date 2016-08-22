@@ -8,6 +8,6 @@
 
 + [DPDK分析](dpdk_comp.md)
 
-+ [应用DPDK的项目]
++ 应用DPDK的项目
 	+ [lagopus](cases/lagopus.md)
 	+ [vpp](cases/vpp.md)
