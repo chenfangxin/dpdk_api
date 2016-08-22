@@ -7,3 +7,7 @@
 + [使用环境设置](dpdk_env.md)
 
 + [DPDK分析](dpdk_comp.md)
+
++ [应用DPDK的项目]
+	+ [lagopus](cases/lagopus.md)
+	+ [vpp](cases/vpp.md)
