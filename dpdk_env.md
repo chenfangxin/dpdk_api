@@ -35,4 +35,7 @@ mount -t hugetlbfs nodev /mnt/huge
 ```
 
 ## 接管物理口
-
+```
+./tools/dpdk_nic_bind.py --bind=igb_uio eth4
+./tools/dpdk_nic_bind.py --bind=igb_uio eth5
+```
