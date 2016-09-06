@@ -22,7 +22,7 @@ rte-app -c COREMASK [-n NUM] [-b <domain:bus:devid.func>] \
 + `-c COREMASK` : 十六进制掩码，指定运行App的Core
 + `-n NUM` : 内存的channel
 + `-b <domain:bus:devid.func>` : NIC的黑名单
-+ `--socket-mem` : 在指定Numa节点上分配的Hugepage大小
++ `--socket-mem=N,M` : 在指定Numa节点上分配的Hugepage的个数
 + `-m MB` : 指定要从Hugepage分配的总内存大小(建议用`--socket-mem`替代)
 + `-r NUM` : 内存rank数量
 + `-v` : 显示App的启动信息
@@ -30,4 +30,13 @@ rte-app -c COREMASK [-n NUM] [-b <domain:bus:devid.func>] \
 + `--file-prefix` : 指定分配hugepage的文件名
 + `--proc-type` : 指定App的类型
 + `-- xen-dom0` :
++ `--vmware-tsc-map`：
++ `--base-virtaddr`：
++ `--vfio-intr`：
+
+> 如何获得当前系统的Channel个数?
+> 用命令 dmidecode -t 17 | grep Bank 来获得Channel个数
+> 用命令 dmidecode -t 17 | grep Size 来获得各Channel上的内存数
+
+## DPDK APP初始化流程
 
