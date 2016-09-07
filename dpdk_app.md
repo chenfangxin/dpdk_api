@@ -64,5 +64,7 @@ APP的命令行分为两部分，由`--`分开，左边称为`EAL Options`，右
 `--ipv6`：
 `--parse-ptype`： 
 
+> Port的顺序可以用`dpdk_nic_bind.py --status`查看
+
 ## DPDK APP初始化流程
 
