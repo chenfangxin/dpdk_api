@@ -8,6 +8,8 @@
 
 + [DPDK组件](dpdk_comp.md)
 
++ [DPDK中的优化技术](dpdk_keys.md)
+
 + 应用DPDK的项目
 	+ [lagopus](cases/lagopus.md)
 	+ [vpp](cases/vpp.md)
