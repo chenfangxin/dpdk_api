@@ -21,10 +21,10 @@ rte-app -c COREMASK [-n NUM] [-b <domain:bus:devid.func>] \
 EAL参数解析：
 + `-c COREMASK` : 十六进制掩码，指定运行App的Core
 + `-n NUM` : 内存的channel
-+ `-b <domain:bus:devid.func>` : NIC的黑名单
++ `-b <domain:bus:devid.func>` : 阻止EAL接管的NIC Blacklist
 + `--socket-mem=N,M` : 在指定Numa节点上分配的Hugepage的个数
 + `-m MB` : 指定要从Hugepage分配的总内存大小(建议用`--socket-mem`替代)
-+ `-r NUM` : 内存rank数量
++ `-r NUM` : 内存rank数量（缺省情况下会自动探测）
 + `-v` : 显示App的启动信息
 + `--huge-dir` : 指定Hugetlbfs所mount的目录
 + `--file-prefix` : 指定分配hugepage的文件名
@@ -56,7 +56,7 @@ APP的命令行分为两部分，由`--`分开，左边称为`EAL Options`，右
 `[-P]`：将所有接口设为混杂模式(Promiscuous mode)
 `[-E]`：使能 Exact match，基于目标IP的完全匹配
 `[-L]`：使能 Longest Prefix match，基于路由表的最长掩码匹配
-`--config (port,queue,lcore)`：指定Port的Queue与Core的对应关系
+`--config="(port,queue,lcore)"`：指定Port的Queue与Core的对应关系
 `--eth-dest=X,MM:MM:MM:MM:MM:MM`：指定Port X的目的MAC
 `--enable-jumbo [--max-pkt-len PKTLEN]`：
 `--no-numa`：
