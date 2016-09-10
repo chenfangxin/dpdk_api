@@ -54,17 +54,20 @@ APP的命令行分为两部分，由`--`分开，左边称为`EAL Options`，右
 [EAL options]： DPDK运行环境的配置选项
 `-p PORTMASK`：十六进制掩码，指定接管的Port
 `[-P]`：将所有接口设为混杂模式(Promiscuous mode)
-`[-E]`：使能 Exact match，基于目标IP的完全匹配
-`[-L]`：使能 Longest Prefix match，基于路由表的最长掩码匹配
+`[-E]`：使能 Exact Match，基于目标IP的完全匹配
+`[-L]`：使能 Longest Prefix Match，基于路由表的最长掩码匹配
 `--config="(port,queue,lcore)"`：指定Port的Queue与Core的对应关系
 `--eth-dest=X,MM:MM:MM:MM:MM:MM`：指定Port X的目的MAC
 `--enable-jumbo [--max-pkt-len PKTLEN]`：
 `--no-numa`：
-`--hash-entry-num`：
+`--hash-entry-num`： 指定Hash Entry的个数
 `--ipv6`：
 `--parse-ptype`： 
 
 > Port的顺序可以用`dpdk_nic_bind.py --status`查看
+
+> Exact Match:  精确匹配
+> Longest Prefix Match: 最长前缀匹配
 
 ## DPDK APP初始化流程
 
