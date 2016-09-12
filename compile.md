@@ -15,5 +15,8 @@
 编译APP：
 ```
 cd examples/l3fw
-make
+make V=1
 ```
+
+`l3fwd`中的编译宏`__SSE4_1__`在哪儿定义的？
+

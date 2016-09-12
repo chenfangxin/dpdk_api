@@ -10,7 +10,7 @@ make
 
 ```
 
-## 启动DPDK APP
+## DPDK APP的EAL参数
 
 ```
 rte-app -c COREMASK [-n NUM] [-b <domain:bus:devid.func>] \
@@ -38,9 +38,26 @@ EAL参数解析：
 > 用命令 dmidecode -t 17 | grep Bank 来获得Channel个数
 > 用命令 dmidecode -t 17 | grep Size 来获得各Channel上的内存数
 
+--------------------
+## 分析`l2fwd`
+
+`l2fwd`的功能是桥接两个相邻的接口，并且在发送报文时，将原MAC改为接口的MAC，目的MAC改为`02:00:00:00:00:00 + TX_PORT_ID`。
+
+启动`l2fwd`的命令行：
+```
+l2fwd [EAL Options] -- -p PORTMASK [-q NQ]
+
+```
+
+APP的命令行分为两部分，由`--`分开，左边称为`EAL Options`，右边是App的私有选项。
+[EAL options]： DPDK运行环境的配置选项
+`-p PORTMASK`：十六进制掩码，指定接管的Port
+`-q NQ`：每个Core的Queue个数
+
+--------------------
 启动`l3fwd`的命令行：
 ```
-l3fwd [EAL options] -- -p PORTMASK
+l3fwd [EAL Options] -- -p PORTMASK
 		[-P] [-E] [-L]
 		--config (port,queue,lcore)[, (port, queue, lcore)]
 		[--eth-dest=X,MM:MM:MM:MM:MM:MM]
