@@ -88,3 +88,8 @@ APP的命令行分为两部分，由`--`分开，左边称为`EAL Options`，右
 
 ## DPDK APP初始化流程
 
+### 参数解析
+```
+--config=(portid, queueid, coreid) 用于配置RX Queue，通过parse_config函数解析。
+```
+
