@@ -7,6 +7,7 @@
 DPDK中，接口驱动代码放在`drivers/net`目录下，编译后形成对应的`librte_pmd_XXX.a`库文件。
 
 + 注册PMD驱动
+
 以IGB驱动为例。接口驱动通过`PMD_REGISTER_DRIVER`宏注册。这个宏利用`__attribute__((constructor,used))`，在程序主函数`main`执行前，执行注册函数`rte_eal_driver_register`，将PMD驱动结构体`struct rte_driver pmd_igb_drv`注册到全局链表`struct rte_driver_list dev_driver_list`中。
 
 IGB的PMD驱动结构体如下:
