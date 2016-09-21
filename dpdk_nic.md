@@ -77,5 +77,9 @@ struct rte_eth_dev {
 
 
 #### 接口状态
+示例`link_status_interrupt`演示了监控接口状态变化。
+
+#### 接口信息及统计
+
 
 

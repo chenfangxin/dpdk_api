@@ -39,6 +39,18 @@ EAL参数解析：
 > 用命令 dmidecode -t 17 | grep Size 来获得各Channel上的内存数
 
 --------------------
+
+几个重要的示例：
+| 名称   | 演示的功能 |
+|--------|------------|
+| l2fwd  | 二层转发 |
+| l3fwd  | 三层转发 |
+| ethtool | 接口信息，状态及统计 |
+| link_status_interrupts | 接口状态变化 |
+| load_balancer | Pipeline模型 |
+| kni | 与内核交互 |
+
+
 ## 分析`l2fwd`
 
 `l2fwd`的功能是桥接两个相邻的接口，并且在发送报文时，将原MAC改为接口的MAC，目的MAC改为`02:00:00:00:00:00 + TX_PORT_ID`。
