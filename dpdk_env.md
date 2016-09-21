@@ -20,6 +20,8 @@ insmod DPDK_BUILD/kmod/rte_kni.ko
 ```
 当使用`igb_uio`时，为了配合使用`Intel vt-d`，需要内核启动命令行中，要加上`iommu=pt`；若使用`vfio-pci`或`uio_pci_generic`时，内核启动命令行可以加上`iommu=pt`或`iommu=on`。
 
+> 设置iommu=pt意即 pass through iotlb translation
+
 
 ## 设置Hugepage
 
