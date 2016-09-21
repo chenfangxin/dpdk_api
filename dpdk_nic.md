@@ -1,8 +1,6 @@
 # DPDK与接口交互
 
-#### DPDK接管接口
-
-##### DPDK中的接口驱动
+#### DPDK的接口驱动
 
 DPDK中，接口驱动代码放在`drivers/net`目录下，编译后形成对应的`librte_pmd_XXX.a`库文件。
 
