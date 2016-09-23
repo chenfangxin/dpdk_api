@@ -107,13 +107,4 @@ APP的命令行分为两部分，由`--`分开，左边称为`EAL Options`，右
 --config=(portid, queueid, coreid) 用于配置RX Queue，通过parse_config函数解析。
 ```
 
---------------------
 
-## 分析 client_server_mp
-
-启动命令行：
-```
-mp_server -c 6 -n 4 -- -p 3 -n 2
-mp_client -c 8 -n 4 --proc-type=auto -- -n 0
-mp_client -c 10 -n 4 --proc-type=auto -- -n 1
-```

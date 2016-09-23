@@ -12,4 +12,17 @@
 
 --------------------
 
-示例`load_balancer`演示了Pipeline模式。
+示例`load_balancer`演示了多线程，Pipeline模式。
+
+
+
+--------------------
+示例`client_server_mp`演示了多进程，Pipeline模式
+
+启动`client_server_mp`的命令行：
+
+```
+mp_server -c 6 -n 4 -- -p 3 -n 2
+mp_client -c 8 -n 4 --proc-type=auto -- -n 0
+mp_client -c 10 -n 4 --proc-type=auto -- -n 1
+```
