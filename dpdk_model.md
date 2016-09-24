@@ -26,3 +26,9 @@ mp_server -c 6 -n 4 -- -p 3 -n 2
 mp_client -c 8 -n 4 --proc-type=auto -- -n 0
 mp_client -c 10 -n 4 --proc-type=auto -- -n 1
 ```
+EAL参数：
+`--proc-type` ：
+
+SPECIAL参数：
+`-p` ： 
+`-n` ： 
