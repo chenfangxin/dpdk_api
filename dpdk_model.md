@@ -30,5 +30,6 @@ EAL参数：
 `--proc-type` ：
 
 SPECIAL参数：
-`-p` ： 
-`-n` ： 
+`-n` ： 在server命令行中，意为client的个数；在client命令行中，意为client的编号
+`-p` ： 在server命令行中，指定接管的NIC
+
