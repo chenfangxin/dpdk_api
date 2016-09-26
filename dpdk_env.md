@@ -47,7 +47,18 @@ mount -t hugetlbfs nodev /mnt/huge
 ```
 
 ## 接管物理口
+
 ```
 ./tools/dpdk_nic_bind.py --bind=igb_uio eth4
 ./tools/dpdk_nic_bind.py --bind=igb_uio eth5
 ```
+
+DPDK使用的UIO相关文件如下：
+
+```
+/sys/bus/pci/devices
+/dev/uioX
+/sys/class/uio/uioX/maps/mapX
+/sys/class/uio/uioX/portio/portX
+```
+

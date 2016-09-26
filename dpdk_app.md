@@ -34,9 +34,22 @@ EAL参数解析：
 + `--base-virtaddr`：
 + `--vfio-intr`：
 
-> 如何获得当前系统的Channel个数?
-> 用命令 dmidecode -t 17 | grep Bank 来获得Channel个数
-> 用命令 dmidecode -t 17 | grep Size 来获得各Channel上的内存数
+### 如何获得当前系统的Channel个数?
+用命令 `dmidecode -t memory | grep Locator `，显示如下：
+```
+	Locator: A1_DIMM0
+	Bank Locator: A1_BANK0
+	Locator: A1_DIMM1
+	Bank Locator: A1_BANK1
+	Locator: A1_DIMM2
+	Bank Locator: A1_BANK2
+	Locator: A1_DIMM3
+	Bank Locator: A1_BANK3
+```
+
+由以上命令显示，可知此平台有1个Channel个数。
+
+> 用命令 dmidecode -t memory | grep Size 来获得各Channel上的内存数
 
 --------------------
 
