@@ -58,6 +58,7 @@ DPDK使用的UIO相关文件如下：
 ```
 /sys/bus/pci/devices
 /dev/uioX
+/sys/class/uio/uioX/device/config
 /sys/class/uio/uioX/maps/mapX
 /sys/class/uio/uioX/portio/portX
 ```
