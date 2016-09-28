@@ -10,9 +10,19 @@
 > modprobe uio
 > insmod igb_uio
 
-假设接口`eth0`的类型为`e1000e`，其PCI地址为`0000:06:00.0`，使用如下命令，让IGB_UIO接管接口：
+假设接口`eth0`的类型为`e1000e`，其PCI地址为`0000:06:00.0`，先使用如下命令解除接口与原驱动的绑定：
+
+> echo 0000:06:00.0 > /sys/bus/pci/devices/0000:06:00.0/drivers/unbind
+
+或
 
 > echo 0000:06:00.0 > /sys/bus/pci/drivers/e1000e/unbind
+
+然后用如下命令，将接口绑定到`igb_uio`：
+> echo "8086 150c" > /sys/bus/pci/drivers/igb_uio/new_id
+> echo 0000:06:00.0 > /sys/bus/pci/drivers/igb_uio/bind
+
+这样会在`/dev`目录下，生成一个新的设备文件`uioN`，N表示绑定到`uio`的设备顺序。
 
 ## Writing your own kernel module
 
