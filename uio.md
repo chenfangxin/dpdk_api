@@ -1,10 +1,18 @@
-# The Userspace I/O HOWTO
+# 使用UIO
 
 原文见[The Userspace I/O HowTo](https://www.kernel.org/doc/htmldocs/uio-howto/)
 
-## About UIO
+## UIO介绍
 
-### How UIO Works
+### 用UIO接管接口
+首先加载`uio`模块， 使用如下命令：
+
+> modprobe uio
+> insmod igb_uio
+
+假设接口`eth0`的类型为`e1000e`，其PCI地址为`0000:06:00.0`，使用如下命令，让IGB_UIO接管接口：
+
+> echo 0000:06:00.0 > /sys/bus/pci/drivers/e1000e/unbind
 
 ## Writing your own kernel module
 
