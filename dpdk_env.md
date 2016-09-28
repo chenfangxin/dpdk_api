@@ -53,10 +53,10 @@ mount -t hugetlbfs nodev /mnt/huge
 ./tools/dpdk_nic_bind.py --bind=igb_uio eth5
 ```
 
-DPDK使用的UIO相关文件如下：
+DPDK使用的UIO相关文件或目录如下：
 
 ```
-/sys/bus/pci/devices
+/sys/bus/pci/devices/DOMAIN:BUS:DEV.FUNC/
 /dev/uioX
 /sys/class/uio/uioX/device/config
 /sys/class/uio/uioX/maps/mapX
