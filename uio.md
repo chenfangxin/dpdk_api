@@ -14,7 +14,7 @@ insmod igb_uio
 
 假设接口`eth0`的类型为`e1000e`，其PCI地址为`0000:06:00.0`，先使用如下命令解除接口与原驱动的绑定：
 ```
-echo 0000:06:00.0 > /sys/bus/pci/devices/0000:06:00.0/drivers/unbind
+echo 0000:06:00.0 > /sys/bus/pci/devices/0000:06:00.0/driver/unbind
 ```
 或
 ```
@@ -28,17 +28,26 @@ echo 0000:06:00.0 > /sys/bus/pci/drivers/igb_uio/bind
 
 这样会在`/dev`目录下，生成一个新的设备文件`uioX`，X表示绑定到`uio`的设备顺序。
 
-程序可以通过`/dev/uioX`文件访问和控制被UIO接管的设备：
+### UIO驱动的工作方式
+
+UIO框架如下图所示：
+
+![UIO框架](pics/uio.jpeg)
+
+每个`UIO`设备，都有一个对应的`/dev/uioX`设备文件。程序可以通过`/dev/uioX`文件访问和控制被UIO接管的设备：
 
 + 通过`mmap`操作，可以将设备的寄存器或内存映射到用户空间，以便程序访问。
 + 通过`read`操作，可以获取设备的中断。
 
 `read`操作是阻塞的，直到有中断发生才会返回。也可先用`select`来等待，然后在调用`read`。`read`返回的结果为中断发生的次数。
-某些硬件有多个内部中断源，但是没有分离的IRQ Mask和Status寄存器，这会造成用户空间程序无法确定到底哪个中断源发生了中断。
 
-为解决这个问题，`UIO`框架提供了`write()`函数。对于只有一个中断源或者有分离IRQ Mask和Status寄存器的硬件，可以忽略这个函数。
-每次执行对`/dev/uioX`设备的`write`操作，都会调用驱动的`irqcontrol()`函数。写入0 或1表示关闭或打开中断。
+某些硬件有多个内部中断源，但是没有分离的IRQ Mask和Status Register(只能通过读取`IRQ Register`来判断中断源)。这种情况下，如果内核通过写`IRQ Register`来关中断，那么用户空间程序无法确定到底哪个中断源发生了中断。
+
+为解决这个问题，`UIO`框架提供了`write()`函数。对于只有一个中断源或者有分离IRQ Mask和Status Register的硬件，可以忽略这个函数。
+每次执行对`/dev/uioX`设备的`write`操作，都会调用驱动的`irqcontrol()`函数。写入0，1分别表示关闭或打开中断。
 如果驱动没有实现`irqcontrol()`函数，`write()`会返回`-ENOSYS`。
+
+为了以恰当的方式处理中断，内核模块可以提供自己的中断处理函数(Interrupt Handler)，`UIO`框架会自动调用。有些设备并不产生中断，但是却要求实现`poll`，这种情况下，可以用一个定时器以一定的间隔触发中断处理函数。
 
 `UIO`框架在`/sys/class/uio/uioX`目录下，为用户空间程序提供如下标准属性：
 
@@ -66,15 +75,35 @@ echo 0000:06:00.0 > /sys/bus/pci/drivers/igb_uio/bind
 
 ## 编写UIO内核模块
 
-以`uio_cif.c`文件为例子。
+以`uio_cif.c`文件为例子，展示如何编写UIO内核模块。
 
-### struct uio_info
+### `struct uio_info`结构体
 
-### Adding an interrupt handler
+结构体`struct uio_info`包含设备驱动的细节，其定义在(`include/linux/uio_driver.h`中)，主要成员如下：
 
-### Using uio_pdrv for platform devices
+```
+struct uio_info {
+	const char *name;
+	const char *version;
+	struct uio_mem mem[MAX_UIO_MAPS];
+	struct uio_port port[MAX_UIO_PORT_REGIONS];
+	long irq;
+	unsigned long irq_flags;
 
-### Using uio_pdrv_genirq for platform devices
+	irqreturn_t (*handler)(int irq, struct uio_info *dev_info);
+	int (*mmap)(struct uio_info *info, struct vm_area_struct *vma);
+	int (*open)(struct uio_info *info, struct inode *inode);
+	int (*release)(struct uio_info *info, struct inode *inode);
+	int (*irqcontrol)(struct uio_info *info, s32 irq_on);
+};
+
+```
+
+### 添加中断处理函数
+
+### Using `uio_pdrv` for platform devices
+
+### Using `uio_pdrv_genirq` for platform devices
 
 ### Using uio_dmem_genirq for platform devices
 
