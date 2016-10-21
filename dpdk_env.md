@@ -22,6 +22,10 @@ insmod DPDK_BUILD/kmod/rte_kni.ko
 
 > 设置iommu=pt意即 pass through iotlb translation
 
+## 关闭ALSR
+
+为了运行多进程模型，需要关闭内核的ALSR特性。
+可在编译内核的时候，选择`CONFIG_COMPAT_BRK`特性；也可在运行时，通过设置`/proc/sys/kernel/randomize_va_space`为0，来关闭ALSR特性。
 
 ## 设置Hugepage
 
