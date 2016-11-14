@@ -14,7 +14,6 @@
 | rte_eth_dev_count            |   |
 
 
-
 ## 内存使用
 
 | 函数名                       | 功能                          |
@@ -28,5 +27,10 @@
 | rte_ring_create              |    |
 | rte_ring_lookup              |    |
 
+## 收发报文
 
-
+| 函数名                       | 功能                          |
+|------------------------------|-------------------------------|
+| rte_eth_rx_burst             |    | 
+| rte_eth_tx_burst             |    | 
+| rte_eth_tx_buffer            |    | 
