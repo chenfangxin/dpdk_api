@@ -4,6 +4,16 @@
 
 ## 多进程
 
+在多进程场景下，由于每个进程都有自己的地址空间(Address Space)，进程之间的共享是如何实现的呢？
+多个进程中，有一个类型为`PRIMARY`的进程先启动，其会初始化一些共享文件，通过个这些文件在多个进程之间共享信息，主要文件如下：
+
++ `/var/run/.rte_config`
+由`rte_eal_config_create()`函数创建，
+
+`/var/run/.rte_hugepage_info`:
+由`rte_eal_hugepage_init()`函数创建，
+
+
 ## Run-to-Complition模式
 	就是在一个执行序列(线程/进程)中，完成数据包的接收/处理/发送的全流程。
 
