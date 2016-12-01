@@ -1,5 +1,7 @@
 # dpdk_api
 
+基于`dpdk-16.11`，分析DPDK的实现以及应用。
+
 + [编译DPDK](compile.md)
 
 + [DPDK应用程序](dpdk_app.md)

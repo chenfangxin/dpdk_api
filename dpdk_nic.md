@@ -6,29 +6,27 @@ DPDK中，接口驱动代码放在`drivers/net`目录下，编译后形成对应
 
 + 注册PMD驱动
 
-以IGB驱动为例。接口驱动通过`PMD_REGISTER_DRIVER`宏注册。这个宏利用`__attribute__((constructor,used))`，在程序主函数`main`执行前，执行注册函数`rte_eal_driver_register`，将PMD驱动结构体`struct rte_driver pmd_igb_drv`注册到全局链表`struct rte_driver_list dev_driver_list`中。
+以IGB驱动为例。接口驱动通过宏`RTE_PMD_REGISTER_PCI`和`RTE_PMD_REGISTER_PCI_TABLE`注册。
+宏`RTE_PMD_REGISTER_PCI`利用了GCC的`__attribute__((constructor,used))`属性。在程序主函数`main`执行前，定义并执行注册函数`pciinitfn_net_e1000_igb`。
+在该函数中，调用`rte_eal_pci_register`函数，将`IGB`的PCI驱动结构体`struct eth_driver rte_igb_pmd->pci_drv`，注册到全局链表`struct pci_driver_list pci_driver_list`中；调用`rte_eal_driver_register`函数，将`pci_drv->driver`注册到链表`struct rte_driver_list dev_driver_list`中。
 
-IGB的PMD驱动结构体如下:
+在`include/rte_pci.h`中定义`struct pci_driver_list`：
 ```
-struct rte_driver pmd_igb_drv = {
-	.type = PMD_PDEV,
-	.init = rte_igb_pmd_init,	// IGB驱动初始化函数
-};
+TAILQ_HEAD(pci_driver_list, rte_pci_driver);
 ```
 
 + 注册以太网驱动
 
-在`rte_eal_init`函数中，调用`rte_eal_dev_init`函数，会遍历`dev_driver_list`，逐个调用`driver->init`函数(对于IGB驱动，就是`rte_igb_pmd_init`函数)。该函数中，调用`rte_eth_driver_register`函数，将`rte_igb_pmd.pci_drv`成员注册到全局链表`struct pci_driver_list pci_driver_list`中。
+在`rte_eal_init`函数中，调用`rte_eal_pci_probe`函数，进而调用`pci_probe_all_drivers`函数，遍历`pci_driver_list`链表，查找设备对应的驱动，并调用`struct rte_pci_driver`中的`probe`函数。
 
 IGB的以太网驱动结构体如下：
 ```
 struct eth_driver rte_igb_pmd = {
 	.pci_drv = {
-		.name = "rte_igb_pmd",
 		.id_table = pci_id_igb_map,
 		.drv_flags = RTE_PCI_DRV_NEED_MAPPING | RTE_PCI_DRV_INTR_LSC | RTE_PCI_DRV_DETACHABLE,
-		.devinit = rte_eth_dev_init, 
-		.devuninit = rte_eth_dev_uninit,
+		.probe = rte_eth_dev_pci_probe, 
+		.remove = rte_eth_dev_pci_remove,
 	},
 	.eth_dev_init = eth_igb_dev_init,
 	.eth_dev_uninit = eth_igb_dev_uninit,
