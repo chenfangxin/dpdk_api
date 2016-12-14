@@ -1,6 +1,6 @@
 # DPDK的处理中断
 
-## 中断初始化
+## 设备中断处理流程
 在`rte_eal_intr_init()`函数中：
 + 初始化`intr_sources`链表。所有UIO设备的中断都会串在这个链表上(在`rte_intr_callback_register`函数中)。
 + 创建`intr_pipe`管道
@@ -62,8 +62,10 @@ struct rte_intr_handle {
 `efds :` RX Interrupt对应的句柄
 
 ## 网卡接收中断
+`port_conf.rxq` 用于控制是否每个RX Queue对应一个中断
 
 ## 网卡状态中断
+`port_conf.lsc` 用于控制是否使用接口状态中断
 
 --------------------
 
