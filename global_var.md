@@ -9,4 +9,8 @@
 + `rte_eth_devices[]`
 定义在`rte_ethdev.c`文件中。在`rte_eth_dev_allocate`中初始化。
 
++ `struct lcore_config lcore_config[RTE_MAX_LCORE]`
+在`rte_eal_cpu_init(）`中初始化
+
++ `struct pci_driver_list pci_driver_list`，`struct pci_device_list pci_device_list`
 
