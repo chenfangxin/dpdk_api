@@ -1,12 +1,14 @@
 # DPDK的处理中断
 
 ## 设备中断处理流程
-在`rte_eal_intr_init()`函数中：
+
+#### 在`rte_eal_intr_init()`函数中
+
 + 初始化`intr_sources`链表。所有UIO设备的中断都会串在这个链表上(在`rte_intr_callback_register`函数中)。
 + 创建`intr_pipe`管道
 + 创建`intr_thread`线程，其执行体是`eal_intr_thread_main`函数
 
-在`intr_thread`线程中：
+#### 在`intr_thread`线程中
 
 ```
 for(;;) {
@@ -33,6 +35,10 @@ for(;;) {
 ```
 
 `intr_pipe`作为重建监听列表的标记，每次执行`rte_intr_callback_register`注册新的设备，就会写`writefd`，这样`intr_pipe.readfd`就会有事件，表明要重新扫描`intr_sources`，重建监听列表。
+
+#### 在`eal_intr_process_interrupts`函数中
++ 读取`events[n].data.fd`， 获得中断发生的次数
++ 逐个调用`intr_sources.callbacks`中注册的中断处理函数，这些函数是通过`rte_intr_callback_register`注册的
 
 ------------------------------------------------------------
 DPDK中，中断分为网卡接收中断，网卡状态中断。
