@@ -20,5 +20,6 @@ sleep_until_rx_interrupt() --> rte_epoll_wait :
 ----------------------------------------
 ### `rte_eal_remote_launch`的实现
 
-此函数用于主线程(master)让子线程(slave)执行指定的函数。主线程通过`write`线程之间通讯的PIPE--`m2s=lcore_config[slave_id].pipe_master2slave[1]`，将函数及其参数发送给子线程。子线程的执行函数为`eal_thread_loop`，在此函数中，读取`pipe_master2slave`，并执行传过来的函数。
+此函数用于主线程(master)让子线程(slave)执行指定的函数。主线程在创建子线程之前，调用`pipe`函数，创建 `pipe_master2slave`和`pipe_slave2master`。
+主线程通过`write`线程之间通讯的PIPE--`m2s=lcore_config[slave_id].pipe_master2slave[1]`，将函数及其参数发送给子线程。子线程的执行函数为`eal_thread_loop`，在此函数中，读取`pipe_master2slave`，并执行传过来的函数。
 
