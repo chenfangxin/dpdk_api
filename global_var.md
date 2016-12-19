@@ -7,7 +7,7 @@
 通过`/var/run/.rte_config`文件，在各进程之间共享`rte_config.mem_config`结构。
 
 + `rte_eth_devices[]`
-定义在`rte_ethdev.c`文件中。在`rte_eth_dev_allocate`中初始化。
+定义在`rte_ethdev.c`文件中。在`rte_eth_dev_allocate`中初始化，nb_ports表示接口总数。
 
 + `struct lcore_config lcore_config[RTE_MAX_LCORE]`
 在`rte_eal_cpu_init(）`中初始化
