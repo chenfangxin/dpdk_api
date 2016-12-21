@@ -13,18 +13,21 @@
 ```
 for(;;) {
 	struct epoll_event pipe_event;
-	int pfd = epoll_create(1);
+	int pfd = epoll_create(1);  // size为1是否正确
 	pipe_event.events = EPOLLIN | EPOLLPRI;
 	pipe_event.data.fd = intr_pipe.readfd;
 	epoll_ctl(pfd, EPOLL_CTL_ADD, intr_pipe.readfd, &pipe_event);
+	totalfds++;
 
 	TAILQ_FOREACH(src, &intr_sources, next) {
 		ev.events = EPOLLIN | EPOLLPRI;
 		ev.data.fd = src->intr_handle.fd;
 		epoll_ctl(pfd, EPOLL_CTL_ADD, src->intr_handle.fd, &ev);
+		totalfds++;
 	}
+
 	for(;;){
-		nfds = epoll_wait(pfd, events);
+		nfds = epoll_wait(pfd, events, totalfds, -1);
 		if(nfds==0){
 			continue;
 		}
