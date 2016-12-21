@@ -14,3 +14,6 @@
 
 + `struct pci_driver_list pci_driver_list`，`struct pci_device_list pci_device_list`
 
++ `struct rte_intr_source_list intr_sources`
+定义在`eal_interrupts.c`文件中，用于存放所有网口的中断处理信息。在`rte_intr_callback_register`函数中，将网口中断注册在此链表中。
+

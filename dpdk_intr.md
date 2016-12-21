@@ -13,7 +13,7 @@
 ```
 for(;;) {
 	struct epoll_event pipe_event;
-	int pfd = epoll_create(1);  // size为1是否正确
+	int pfd = epoll_create(1);
 	pipe_event.events = EPOLLIN | EPOLLPRI;
 	pipe_event.data.fd = intr_pipe.readfd;
 	epoll_ctl(pfd, EPOLL_CTL_ADD, intr_pipe.readfd, &pipe_event);
@@ -36,6 +36,8 @@ for(;;) {
 	close(pfd);
 }
 ```
+
+> `epoll_create(size)`调用中，`size`的大小在`2.6.8`之后的内核中已经被忽略了，但是必须大于0
 
 `intr_pipe`作为重建监听列表的标记，每次执行`rte_intr_callback_register`注册新的设备，就会写`writefd`，这样`intr_pipe.readfd`就会有事件，表明要重新扫描`intr_sources`，重建监听列表。
 
