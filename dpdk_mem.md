@@ -85,7 +85,8 @@ struct malloc_heap{
 ```
 
 #### 基于`malloc_heap`的内存管理
-在`int rte_eal_malloc_heap_init(void)`函数中，在每个`memseg`的头尾建立`struct malloc_elem`元素，并根据该`memseg`的大小，将其添加到`malloc_heap->free_head[]`中。
+在`int rte_eal_malloc_heap_init(void)`函数中，在每个`memseg`的头尾建立`struct malloc_elem`结构，并根据该`memseg`的大小，将其添加到`malloc_heap->free_head[]`中。
+其实在分配过程中，会在每个可供分配的内存块的头尾建立`struct malloc_elem`结构，通过该结构将内存块串联在`malloc_heap->free_head`链表中。分配出来的内存块的头尾也会建立`struct malloc_elem`结构，以便释放时，能合并内存块并串入链表。
 
 > `malloc_heap->free_head`的规格，由宏`MALLOC_MINSIZE_LOG2`和`MALLOC_LOG2_INCREMENT`控制，总的规格数为`RTE_HEAP_NUM_FREELIST`。(见`malloc_elem_free_list_index(size)`函数)
 

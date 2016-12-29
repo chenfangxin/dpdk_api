@@ -25,7 +25,7 @@ struct eth_driver rte_igb_pmd = {
 	.pci_drv = {
 		.id_table = pci_id_igb_map,
 		.drv_flags = RTE_PCI_DRV_NEED_MAPPING | RTE_PCI_DRV_INTR_LSC | RTE_PCI_DRV_DETACHABLE,
-		.probe = rte_eth_dev_pci_probe, 
+		.probe = rte_eth_dev_pci_probe,
 		.remove = rte_eth_dev_pci_remove,
 	},
 	.eth_dev_init = eth_igb_dev_init,
