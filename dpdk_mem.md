@@ -23,6 +23,7 @@ struct rte_mem_config{
 	uint64_t mem_cfg_addr;
 };
 ```
+
 + `memseg:` 表示一段连续的物理内存
 ```
 struct rte_memseg{
@@ -38,6 +39,7 @@ struct rte_memseg{
 	uint32_t nrank;
 };
 ```
+`rte_config.mem_config.memseg[]`结构在初始化后，在运行过程中，不会再改变。
 
 + `memzone:`
 ```
@@ -55,6 +57,7 @@ struct rte_memzone{
 	uint32_t memseg_id;
 };
 ```
+`rte_config.mem_config.memzone[]`为已经分配出去的内存块，各进程可以通过名字查找。
 
 + `tailq_head:`
 ```
