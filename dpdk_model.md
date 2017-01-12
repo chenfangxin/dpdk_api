@@ -8,10 +8,10 @@
 多个进程中，有一个类型为`PRIMARY`的进程先启动，其会初始化一些共享文件，通过个这些文件在多个进程之间共享信息，主要文件如下：
 
 + `/var/run/.rte_config`
-由`rte_eal_config_create()`函数创建，
+由`rte_eal_config_create()`函数创建，共享`struct rte_mem_config`信息。
 
 `/var/run/.rte_hugepage_info`:
-由`rte_eal_hugepage_init()`函数创建，
+由`rte_eal_hugepage_init()-->create_shared_memory()`函数创建，共享`struct hugepage_file`数组。
 
 
 ## Run-to-Complition模式
