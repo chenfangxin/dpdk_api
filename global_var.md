@@ -6,6 +6,16 @@
 + `static struct rte_config rte_config`
 通过`/var/run/.rte_config`文件，在各进程之间共享`rte_config.mem_config`结构。
 
+```
+struct rte_config{
+	uint32_t master_lcore;
+	uint32_t lcore_count;
+	enum rte_lcore_role_t lcore_role[RTE_MAX_LCORE];
+	enum rte_proc_type_t process_type;
+	struct rte_mem_config *mem_config;
+}__attribute__((__packed__));
+```
+
 + `rte_eth_devices[]`
 定义在`rte_ethdev.c`文件中。在`rte_eth_dev_allocate`中初始化，nb_ports表示接口总数。
 

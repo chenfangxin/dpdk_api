@@ -67,10 +67,11 @@ struct rte_intr_handle {
 
 ```
 各成员用途如下：
-`uio_cfg_fd :` 访问`/sys/class/uioX/device/config`文件的句柄，在`pci_uio_alloc_resource`函数中初始化
-`fd :` 访问`/dev/uioX`文件的句柄，在`pci_uio_ioport_map`函数中初始化
-`nb_efd :` 关注的RX Interrupt数量(即RX Queue数)
-`efds :` RX Interrupt对应的句柄，在`rte_intr_efd_enable`中初始化
+
++ `uio_cfg_fd :` 访问`/sys/class/uioX/device/config`文件的句柄，在`pci_uio_alloc_resource`函数中初始化
++ `fd :` 访问`/dev/uioX`文件的句柄，在`pci_uio_ioport_map`函数中初始化
++ `nb_efd :` 关注的RX Interrupt数量(即RX Queue数)
++ `efds :` RX Interrupt对应的句柄，在`rte_intr_efd_enable`中初始化
 
 ## 网卡接收中断
 `port_conf.rxq` 用于控制是否每个RX Queue对应一个中断
