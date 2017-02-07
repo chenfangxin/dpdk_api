@@ -9,7 +9,7 @@ DPDK与内核的交互，依赖`kni`模块，结构如下图所示：
 `kni`的启动参数示例如下：
 
 ```
-kni -c 0xf0 -n 4 -- -P -p 0x3 -config="(0,4,6,8),(1,5,7,9)"
+kni -c 0xf -n 4 -- -P -p 0x3 --config="(0,1,2,3),(1,1,2,3)"
 ```
 config的格式为`(port, lcore_rx, lcore_tx, lcore_kernel_thread)`，分别指定用于接口接收和发送的Core，以及运行内核线程的Core。
 
@@ -18,7 +18,7 @@ config的格式为`(port, lcore_rx, lcore_tx, lcore_kernel_thread)`，分别指�
 `/dev/kni`是一个字符设备，在`lib/librte_eal/linuxapp/kni/kni_misc.c:kni_init()`中，调用`misc_register()`函数创建。
 字符设备对外提供`ioctl`接口，有三个命令：`RTE_KNI_IOCTL_TEST`,`RTE_KNI_IOCTL_CREATE`和`RTE_KNI_IOCTL_RELEASE`。
 
-在`lib/librte_kni/rte_kni.c`中，对`/dev/kni`模块提供的接口，做了进一步的封装。
+在`lib/librte_kni/rte_kni.c`中，对`/dev/kni`模块提供的接口，做了进一步的封装，用户空间程序可以调用这些接口，与KNI设备交互。
 
 ## 与`kni模块`的交互过程
 
