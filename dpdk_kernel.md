@@ -6,6 +6,12 @@ DPDK与内核的交互，依赖`kni`模块，结构如下图所示：
 
 例程`kni`演示了DPDK与内核协议栈的交互。
 
+`kni`的启动参数示例如下：
+
+```
+kni -c 0xf0 -n 4 -- -P -p 0x3 -config="(0,4,6,8),(1,5,7,9)"
+```
+config的格式为`(port, lcore_rx, lcore_tx, lcore_kernel_thread)`，分别指定用于接口接收和发送的Core，以及运行内核线程的Core。
 
 ## `kni模块`的初始化过程
 
@@ -15,4 +21,11 @@ DPDK与内核的交互，依赖`kni`模块，结构如下图所示：
 在`lib/librte_kni/rte_kni.c`中，对`/dev/kni`模块提供的接口，做了进一步的封装。
 
 ## 与`kni模块`的交互过程
+
+`kni`设备基于共享内存，在内核与用户空间之间，建立起了FIFO，用于传递报文。
+
+| 函数名                  | 功能                          |
+|-------------------------|-------------------------------|
+| rte_kni_rx_burst        | 从KNI设备(Kernel)收包         |
+| rte_kni_tx_burst        | 向KNI设备(Kernel)发包         |
 

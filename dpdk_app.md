@@ -61,7 +61,7 @@ EAL参数解析：
 | ethtool | 接口信息，状态及统计 |
 | link_status_interrupts | 接口状态变化 |
 | load_balancer | 多线程，Pipeline模型 |
-| client_server_mp | 多进程，Pipeline模型 | 
+| client_server_mp | 多进程，Pipeline模型 |
 | kni | 与内核交互 |
 
 
@@ -106,7 +106,7 @@ APP的命令行分为两部分，由`--`分开，左边称为`EAL Options`，右
 `--no-numa`：
 `--hash-entry-num`： 指定Hash Entry的个数
 `--ipv6`：
-`--parse-ptype`： 
+`--parse-ptype`：
 
 > Port的顺序可以用`dpdk_nic_bind.py --status`查看
 
