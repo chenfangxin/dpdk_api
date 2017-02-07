@@ -13,6 +13,8 @@ kni -c 0xf -n 4 -- -P -p 0x3 --config="(0,1,2,3),(1,1,2,3)"
 ```
 config的格式为`(port, lcore_rx, lcore_tx, lcore_kernel_thread)`，分别指定用于接口接收和发送的Core，以及运行内核线程的Core。
 
+上例中，会创建两个虚接口设备（vEth0_0, vEth1_0）和一个内核线程(kni_single)。虚接口的名称由用户空间程序设定。
+
 ## `kni模块`的初始化过程
 
 `/dev/kni`是一个字符设备，在`lib/librte_eal/linuxapp/kni/kni_misc.c:kni_init()`中，调用`misc_register()`函数创建。
