@@ -4,7 +4,7 @@
 
 | 函数名                       | 功能                          |
 |------------------------------|-------------------------------|
-| rte_lcore_id                 |   |
+| rte_lcore_id                 | 返回当前Core ID   |
 | rte_lcore_count              |   |
 | rte_lcore_to_socket          |   |
 
