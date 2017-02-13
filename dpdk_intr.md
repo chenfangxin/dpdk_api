@@ -70,8 +70,30 @@ struct rte_intr_handle {
 
 + `uio_cfg_fd :` 访问`/sys/class/uioX/device/config`文件的句柄，在`pci_uio_alloc_resource`函数中初始化
 + `fd :` 访问`/dev/uioX`文件的句柄，在`pci_uio_ioport_map`函数中初始化
-+ `nb_efd :` 关注的RX Interrupt数量(即RX Queue数)
-+ `efds :` RX Interrupt对应的句柄，在`rte_intr_efd_enable`中初始化
++ `type :` 中断的类型(定义于`eal_interrupts.h`)
++ `max_intr :` 接口使用的中断个数。由`pci_uio_efd_enable`函数可知，除了`VFIO_MSIX`类型的中断，其他类型的中断，所有RX Queue共用一个中断。
++ `nb_efd :` 关注的RX Interrupt数量(即RX Queue数)，除了`VFIO_MSIX`类型的中断，其他类型的中断共用一个fd
++ `efds :` RX Interrupt对应的句柄(fd)，在`rte_intr_efd_enable`中初始化
++ `elist :`
++ `intr_vec :` 在接口驱动中初始化，该数组大小由接口的RX Queue个数决定
+
+`struct rte_epoll_event` 结构体定义如下：
+```
+struct rte_epoll_event{
+	volatile uint32_t status;
+	int fd;
+	int epfd;
+	struct rte_epoll_data epdata;
+};
+
+struct rte_epoll_data{
+	uint32_t event;
+	void *data;
+	rte_intr_event_cb_t cb_func;
+	void *cb_arg;
+};
+```
+
 
 ## 网卡接收中断
 `port_conf.rxq` 用于控制是否每个RX Queue对应一个中断
