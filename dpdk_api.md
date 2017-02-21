@@ -6,7 +6,8 @@
 |------------------------------|-------------------------------|
 | rte_lcore_id                 | 返回当前Core ID   |
 | rte_lcore_count              |   |
-| rte_lcore_to_socket          |   |
+| rte_socket_id                |   |
+| rte_lcore_to_socket_id       |   |
 
 
 ## 内存使用
@@ -26,7 +27,9 @@
 
 | 函数名                       | 功能                          |
 |------------------------------|-------------------------------|
-| rte_eth_dev_count            |   |
+| rte_eth_dev_count            | 由UIO接管的网卡个数(nb_ports)  |
+| rte_eth_dev_socket_id        |   |
+| rte_eth_dev_info_get         |   |
 | rte_eth_dev_configure        |   |
 | rte_eth_rx_queue_setup       |   |
 | rte_eth_tx_queue_setup       |   |
