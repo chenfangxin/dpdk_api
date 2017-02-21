@@ -96,7 +96,7 @@ struct rte_epoll_data{
 
 
 ## 网卡接收中断
-`port_conf.rxq` 用于控制是否每个RX Queue对应一个中断
+`port_conf.rxq` 用于控制是否使用接收中断。在`dev->dev_ops->dev_start`函数中，根据此参数配置中断。
 
 ## 网卡状态中断
 `port_conf.lsc` 用于控制是否使用接口状态中断
