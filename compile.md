@@ -19,4 +19,4 @@ make V=1
 ```
 
 `l3fwd`中的编译宏`__SSE4_1__`在哪儿定义的？
-执行`gcc -march=native -dM -E - < /dev/null`，可以获得GCC支持的宏。	
+执行`gcc -march=native -dM -E - < /dev/null`，可以获得GCC支持的宏。
