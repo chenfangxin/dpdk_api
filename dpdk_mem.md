@@ -101,6 +101,14 @@ void *rte_malloc_socket(const char *type, size_t size, unsigned align, int socke
 
 由此可见，基于`malloc_heap`的内存管理，其实是依赖基于`malloc_elem`组成的链表，分配过程就是在链表中找到并截取一块大小合适的内存。
 
+在`rte_free`函数中，释放内存块，其函数原型如下：
+```
+void rte_free(void *addr);
+```
+该函数中，先通过`malloc_elem_from_data`，找到要释放的内存块对应的`malloc_elem`结构体，然后调用`malloc_elem_free`函数释放内存块。
+
+> 不管是分配，还是释放内存块的过程，都要加`heap->lock`这个全局锁，由此可见效率是不高的。
+
 #### 基于`memzone`的内存管理
 通过`rte_memzone_reserve()`函数创建`memzone`，其实也是基于`malloc_heap`，从其中截取一段内存，然后自己管理。
 

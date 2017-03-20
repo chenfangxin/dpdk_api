@@ -17,7 +17,7 @@ struct rte_config{
 ```
 
 + `rte_eth_devices[]`
-定义在`rte_ethdev.c`文件中。在`rte_eth_dev_allocate`中初始化，nb_ports表示接口总数。
+定义在`rte_ethdev.c`文件中。在`rte_eth_dev_allocate`中初始化，`nb_ports`表示接口总数。
 
 + `struct lcore_config lcore_config[RTE_MAX_LCORE]`
 在`rte_eal_cpu_init(）`中初始化。此数组中包含全系统的CPU相关信息，比如个数，序号，所在NUMA Node等。

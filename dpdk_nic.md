@@ -6,13 +6,25 @@ DPDK中，接口驱动代码放在`drivers/net`目录下，编译后形成对应
 
 + 注册PMD驱动
 
-以IGB驱动为例。接口驱动通过宏`RTE_PMD_REGISTER_PCI`和`RTE_PMD_REGISTER_PCI_TABLE`注册。
-宏`RTE_PMD_REGISTER_PCI`利用了GCC的`__attribute__((constructor,used))`属性。在程序主函数`main`执行前，定义并执行注册函数`pciinitfn_net_e1000_igb`。
+以IGB驱动为例。接口驱动通过`RTE_PMD_REGISTER_PCI`宏和`RTE_PMD_REGISTER_PCI_TABLE`宏注册。
+
+> `RTE_PMD_REGISTER_PCI`宏利用了GCC的`__attribute__((constructor,used))`属性。在程序主函数`main`执行前，定义并执行注册函数`pciinitfn_net_e1000_igb`。
+
 在该函数中，调用`rte_eal_pci_register`函数，将`IGB`的PCI驱动结构体`struct eth_driver rte_igb_pmd->pci_drv`，注册到全局链表`struct pci_driver_list pci_driver_list`中；调用`rte_eal_driver_register`函数，将`pci_drv->driver`注册到链表`struct rte_driver_list dev_driver_list`中。
 
 在`include/rte_pci.h`中定义`struct pci_driver_list`：
 ```
 TAILQ_HEAD(pci_driver_list, rte_pci_driver);
+
+struct rte_pci_driver{
+	TAILQ_ENTRY(rte_pci_driver) next;
+	struct rte_driver driver;
+	pci_probe_t *probe;
+	pci_remove_t *remove;
+	const struct rte_pci_id *id_table;
+	uint32_t drv_flags;
+};
+
 ```
 
 + 注册以太网驱动
