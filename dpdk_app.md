@@ -108,6 +108,8 @@ APP的命令行分为两部分，由`--`分开，左边称为`EAL Options`，右
 `--ipv6`：
 `--parse-ptype`：
 
+例如: ```/bin/l3fwd -c 3 -- -p 3 -P -E --config="(0,0,0),(1,0,1)" ```
+
 > Port的顺序可以用`dpdk_nic_bind.py --status`查看
 
 > Exact Match:  精确匹配
